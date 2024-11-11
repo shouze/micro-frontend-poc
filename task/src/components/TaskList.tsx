@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Task } from "../types/Task";
 import { Loader } from "./Loader";
 import { MarkdownContent } from "./MarkdownContent";
+import { useGetShadowRoot } from '../hooks/useShadowRoot';
 
 interface TaskListProps {
   apiBaseUrl: string;
@@ -19,6 +20,8 @@ export function TaskList({
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const listName = location.pathname.substring(1);
+
+  const doc = useGetShadowRoot() ?? document;
 
   useEffect(() => {
     setIsLoading(true);
@@ -70,7 +73,7 @@ export function TaskList({
               <button
                 className="task-details-toggle"
                 onClick={() => {
-                  const details = document.getElementById(`details-${index}`);
+                  const details = doc.getElementById(`details-${index}`);
                   details?.classList.toggle('open');
                 }}
                 aria-expanded="false"

@@ -14,4 +14,4 @@ yarn add react-router-dom@6
 
 ## What is the intent?
 
-We want to demonstrate here how to adapt a react app as a web component.
+Demonstrate how to expose a react app as a web component.
