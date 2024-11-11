@@ -22,12 +22,6 @@ export function App({ apiBaseUrl, basename }: AppProps) {
         >
           Build web component app
         </NavLink>
-        <NavLink 
-          to="/second-list"
-          className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
-        >
-          Second List
-        </NavLink>
       </nav>
       <Routes>
         <Route path="/" element={<Navigate to="/build-app-as-web-component" replace />} />

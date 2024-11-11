@@ -1,7 +1,7 @@
 [
     {
         "name": "Install web component dev dependencies",
-        "description": "```shell\n$ yarn add -D @vitejs/plugin-react vite-plugin-dts\n```",
+        "description": "```shell\n$ yarn add -D @vitejs/plugin-react\n```",
         "done": true
     },
     {
@@ -11,12 +11,12 @@
     },
     {
         "name": "Adapt vite config to build the web component app with a mode",
-        "description": "```typescript\n// vite.config.ts\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react-swc';\nimport dts from 'vite-plugin-dts';\n\nexport default defineConfig(({ mode }) => ({\n  plugins: [\n    react(),\n    mode === 'web-component' && dts(),\n  ].filter(Boolean),\n  build: {\n    lib: mode === 'web-component' ? {\n      entry: 'src/TaskWebComponent.tsx',\n      formats: ['es'],\n      fileName: 'task-web-component',\n    } : undefined,\n  },\n}));\n```",
+        "description": "```typescript\n// vite.config.ts\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react-swc';\n;\n\nexport default defineConfig(({ mode }) => ({\n  plugins: [react()],\n  build: {\n    lib: mode === 'web-component' ? {\n      entry: 'src/TaskWebComponent.tsx',\n      formats: ['es'],\n      fileName: 'task-web-component',\n    } : undefined,\n  },\n}));\n```",
         "done": true
     },
     {
         "name": "Add scripts to build the web component app",
-        "description": "In package.json\n\n```json\n{\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"dev:wc\": \"vite --mode web-component\",\n    \"build\": \"tsc && vite build\",\n    \"build:wc\": \"tsc && vite build --mode web-component\",\n    \"preview\": \"vite preview\",\n    \"preview:wc\": \"vite preview --mode web-component\"\n  }\n}\n```",
+        "description": "In package.json\n\n```json\n{\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"dev:wc\": \"vite --mode web-component\",\n    \"build\": \"tsc && vite build\",\n    \"build:wc\": \"tsc && vite build --mode web-component\",\n    \"preview\": \"vite preview\",\n    \"preview:wc\": \"vite preview --mode web-component\"\n  }\n}\n```\nThen, ensure every script is working as expected.",
         "done": true
     }
 ]
