@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Install web component dev dependencies",
+        "description": "```shell\n$ yarn add -D @vitejs/plugin-react vite-plugin-dts\n```",
+        "done": true
+    },
+    {
+        "name": "Create the web component of the app",
+        "description": "```typescript\n// src/TaskWebComponent.tsx\nimport React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport { App } from './App';\n\nclass TaskWebComponent extends HTMLElement {\n  private root: ReactDOM.Root | null = null;\n\n  static get observedAttributes() {\n    return ['route-basename', 'api-baseurl'];\n  }\n\n  connectedCallback() {\n    const mountPoint = document.createElement('div');\n    this.attachShadow({ mode: 'open' }).appendChild(mountPoint);\n\n    this.root = ReactDOM.createRoot(mountPoint);\n    this.render();\n  }\n\n  attributeChangedCallback() {\n    this.render();\n  }\n\n  private render() {\n    const basename = this.getAttribute('route-basename') || '';\n    const apiBaseUrl = this.getAttribute('api-baseurl') || '';\n\n    this.root?.render(\n      <React.StrictMode>\n        <App basename={basename} apiBaseUrl={apiBaseUrl} />\n      </React.StrictMode>\n    );\n  }\n}\n\ncustomElements.define('task-web-component', TaskWebComponent);\n```",
+        "done": true
+    },
+    {
+        "name": "Adapt vite config to build the web component app with a mode",
+        "description": "```typescript\n// vite.config.ts\nimport { defineConfig } from 'vite';\nimport react from '@vitejs/plugin-react-swc';\nimport dts from 'vite-plugin-dts';\n\nexport default defineConfig(({ mode }) => ({\n  plugins: [\n    react(),\n    mode === 'web-component' && dts(),\n  ].filter(Boolean),\n  build: {\n    lib: mode === 'web-component' ? {\n      entry: 'src/TaskWebComponent.tsx',\n      formats: ['es'],\n      fileName: 'task-web-component',\n    } : undefined,\n  },\n}));\n```",
+        "done": true
+    },
+    {
+        "name": "Add scripts to build the web component app",
+        "description": "In package.json\n\n```json\n{\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"dev:wc\": \"vite --mode web-component\",\n    \"build\": \"tsc && vite build\",\n    \"build:wc\": \"tsc && vite build --mode web-component\",\n    \"preview\": \"vite preview\",\n    \"preview:wc\": \"vite preview --mode web-component\"\n  }\n}\n```",
+        "done": true
+    }
+]
