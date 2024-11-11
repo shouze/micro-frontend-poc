@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Web components ref",
+        "description": "MDN Web Docs: [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)",
+        "done": false
+    },
+    {
+        "name": "Shadow DOM ref",
+        "description": "MDN Web Docs: [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM)",
+        "done": false
+    }
+]

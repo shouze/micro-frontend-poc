@@ -17,29 +17,35 @@ export function App({ apiBaseUrl, basename }: AppProps) {
       <h1>Task App</h1>
       <h2>how to wrap a react app into a web component</h2>
       <nav className="nav-menu">
+      <NavLink 
+          to="/intro"
+          className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+        >
+          1. Intro
+        </NavLink>
         <NavLink 
           to="/build-app-as-web-component"
           className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
         >
-          1. Build
+          2. Build
         </NavLink>
         <NavLink 
           to="/dev-as-web-component"
           className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
         >
-          2. Dev/DX
+          3. Dev/DX
         </NavLink>
         <NavLink 
           to="/stylesheets"
           className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
         >
-          3. StyleSheets
+          4. StyleSheets
         </NavLink>
         <NavLink 
           to="/shadow-root"
           className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
         >
-          4. ShadowRoot
+          5. ShadowRoot
         </NavLink>
       </nav>
       <Routes>
