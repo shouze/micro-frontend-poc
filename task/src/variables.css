@@ -1,0 +1,28 @@
+:root {
+    /* font */
+    --fulll-font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    --fulll-font-weight-default: 400;
+    --fulll-line-height-default: 1.5;
+    --fulll-font-synthesis: none;
+
+    /* color */
+    --fulll-color-scheme: light dark;
+    --fulll-color-dark: rgba(255, 255, 255, 0.87);
+    --fulll-color-light: #213547;
+
+    /* links */
+    --fulll-link-color: #646cff;
+    --fulll-link-color-hover: #535bf2;
+    --fulll-link-color-hover-light: #747bff;
+    --fulll-link-text-decoration: inherit;
+    --fulll-link-font-weight: 500;
+
+    /* background-color */
+    --fulll-background-color-dark: #242424;
+    --fulll-background-color-light: #ffffff;
+
+    /* text-rendering */
+    --fulll-text-rendering: optimizeLegibility;
+    --fulll--webkit-font-smoothing: antialiased;
+    --fulll--moz-osx-font-smoothing: grayscale;
+}

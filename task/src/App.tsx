@@ -14,7 +14,8 @@ export function App({ apiBaseUrl, basename }: AppProps) {
   
   return (
     <BrowserRouter basename={basename} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-      <h1>Task App : how to wrap a react app into a web component</h1>
+      <h1>Task App</h1>
+      <h2>how to wrap a react app into a web component</h2>
       <nav className="nav-menu">
         <NavLink 
           to="/build-app-as-web-component"
@@ -42,7 +43,7 @@ export function App({ apiBaseUrl, basename }: AppProps) {
         </NavLink>
       </nav>
       <Routes>
-        <Route path="/" element={<Navigate to="/build-app-as-web-component" replace />} />
+        <Route path="/" element={<Navigate to="/intro" replace />} />
         <Route path="/:listId" element={
           <TaskList 
             apiBaseUrl={apiBaseUrl}

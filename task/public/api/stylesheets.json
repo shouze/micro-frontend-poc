@@ -3,5 +3,10 @@
         "name": "Attach styles to the shadow root",
         "description": "### in src/TaskWebComponent.tsx\n```typescript\nimport React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport { App } from './App';\nimport styles from './App.css?inline'; \nimport highlightStyles from 'highlight.js/styles/github.css?inline';\n\nclass TaskWebComponent extends HTMLElement {\n  private root: ReactDOM.Root | null = null;\n\n  static get observedAttributes() {\n    return ['route-basename', 'api-baseurl'];\n  }\n\n  connectedCallback() {\n    const mountPoint = document.createElement('div');\n    const shadow = this.attachShadow({ mode: 'open' });\n\n    const styleSheet = new CSSStyleSheet();\n    const highlightStyleSheet = new CSSStyleSheet();\n    styleSheet.replaceSync(styles);\n    highlightStyleSheet.replaceSync(highlightStyles);\n    shadow.adoptedStyleSheets = [styleSheet, highlightStyleSheet];\n    shadow.appendChild(mountPoint);\n\n    this.root = ReactDOM.createRoot(mountPoint);\n    this.render();\n  }\n\n  attributeChangedCallback() {\n    this.render();\n  }\n\n  private render() {\n    const basename = this.getAttribute('route-basename') || '';\n    const apiBaseUrl = this.getAttribute('api-baseurl') || '';\n\n    this.root?.render(\n      <React.StrictMode>\n        <App \n          basename={basename} \n          apiBaseUrl={apiBaseUrl} \n        />\n      </React.StrictMode>\n    );\n  }\n}\n\ncustomElements.define('task-web-component', TaskWebComponent);\n```",
         "done": true
+    },
+    {
+        "name": "8 Ways to Style the Shadow DOM",
+        "description": "See this article [8 Ways to Style the Shadow DOM](https://jordanbrennan.hashnode.dev/8-ways-to-style-the-shadow-dom)",
+        "done": false
     }
 ]
