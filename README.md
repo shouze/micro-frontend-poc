@@ -2,6 +2,18 @@
 
 This repository illustrates an opiniated micro frontend solution relying on Web Components.
 
+## How to start?
+
+```shell
+# First time, install dependencies
+cd host && yarn && cd ..
+cd task && yarn && cd ..
+cd calendar && yarn && cd ..
+yarn
+# Other times, start dev
+yarn dev
+```
+ 
 ## Concept and context
 
 Micro frontends were first mentioned in [ThoughtWorks Technology Radar in 2016](https://www.thoughtworks.com/radar/techniques/micro-frontends).
