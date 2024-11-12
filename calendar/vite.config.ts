@@ -59,6 +59,6 @@ export default defineConfig(({ mode }) => ({
     ? getWebComponentConfig().build 
     : undefined,
   server: {
-    open: true,
+    open: false,
   }
 }));
