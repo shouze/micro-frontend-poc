@@ -4,6 +4,6 @@ import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App apiBaseUrl='http://localhost:5173/api' />
+    <App apiBaseUrl='/api' />
   </StrictMode>,
 )

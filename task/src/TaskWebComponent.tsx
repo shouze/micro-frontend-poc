@@ -11,7 +11,7 @@ class TaskWebComponent extends HTMLElement {
   private instanceId: string;
 
   static get observedAttributes() {
-    return ['route-basename', 'api-baseurl'];
+    return ['route-basename', 'api-baseurl', 'loading-delay'];
   }
 
   constructor() {
@@ -46,6 +46,7 @@ class TaskWebComponent extends HTMLElement {
   private render() {
     const basename = this.getAttribute('route-basename') || '';
     const apiBaseUrl = this.getAttribute('api-baseurl') || '';
+    const loadingDelay = parseInt(this.getAttribute('loading-delay') || '0');
 
     this.root?.render(
       <React.StrictMode>
@@ -53,6 +54,7 @@ class TaskWebComponent extends HTMLElement {
           <App 
             basename={basename} 
             apiBaseUrl={apiBaseUrl} 
+            loadingDelay={loadingDelay}
           />
         </ShadowRootContext.Provider>
       </React.StrictMode>

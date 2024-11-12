@@ -7,7 +7,7 @@
     "dev": "vite",
     "dev:wc": "vite --mode web-component",
     "build": "tsc && vite build",
-    "build:wc": "tsc && vite build --mode web-component && cp preview.wc.html dist/index.html && cp src/variables.css dist/",
+    "build:wc": "tsc && vite build --mode web-component && cp src/variables.css dist/",
     "preview": "vite preview",
     "preview:wc": "vite preview --mode web-component"
   },

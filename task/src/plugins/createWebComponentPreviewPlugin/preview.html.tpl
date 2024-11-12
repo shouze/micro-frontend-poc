@@ -8,17 +8,14 @@
             background-color: var(--fulll-background-color-dark);
         }
         @media (prefers-color-scheme: light) {
-        :root {
-            color: var(--fulll-color-light);
-            background-color: var(--fulll-background-color-light);
+          :root {
+              background-color: var(--fulll-background-color-light);
+          }
         }
     </style>
   </head>
   <body>
-    <task-web-component
-      route-basename="/"
-      api-baseurl="http://localhost:4173/api"
-    ></task-web-component>
-    <script type="module" src="/task-web-component.js"></script>
+    {{webComponent}}
+    <script type="module" src="{{scriptPath}}"></script>
   </body>
 </html>

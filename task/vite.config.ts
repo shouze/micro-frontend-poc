@@ -2,37 +2,55 @@ import { defineConfig, UserConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import webcomponentPlugin from './src/plugins/webComponentPlugin';
 import injectShadowRootPlugin from './src/plugins/injectShadowRoot';
-
-const WEB_COMPONENT_CONFIG = {
-  script: '/src/TaskWebComponent.tsx',
-  webComponent: '<task-web-component route-basename="/" api-baseurl="http://localhost:5173/api"></task-web-component>'
+import createWebComponentPreviewPlugin from './src/plugins/createWebComponentPreviewPlugin';
+const PORTS = {
+  dev: 5173,
+  preview: 4173
+} as const;
+const webComponentName = 'TaskWebComponent';
+const getWebComponentTemplate = (mode: string) => {
+  const port = mode === 'preview' ? PORTS.preview : PORTS.dev;
+  return `<task-web-component 
+    route-basename="/" 
+    api-baseurl="http://localhost:${port}/api" 
+    loading-delay="600"
+  ></task-web-component>`;
 };
+const script = `/src/${webComponentName}.tsx`;
 
-const getWebComponentConfig = (): Partial<UserConfig> => ({
-  plugins: [
-    webcomponentPlugin(WEB_COMPONENT_CONFIG),
-    injectShadowRootPlugin(),
-  ],
-  build: {
-    lib: {
-      entry: 'src/TaskWebComponent.tsx',
-      formats: ['es'],
-      fileName: 'task-web-component'
-    },
-    minify: 'esbuild',
-    sourcemap: true,
-    rollupOptions: {
-      output: {
-        inlineDynamicImports: false,
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'router-vendor': ['react-router-dom'],
-          'markdown': ['react-markdown', 'rehype-highlight', 'remark-gfm']
+const getWebComponentConfig = (command: string): Partial<UserConfig> => {
+  const mode = command === 'build' ? 'preview' : 'dev';
+  const webComponent = getWebComponentTemplate(mode);
+  return {
+    plugins: [
+      webcomponentPlugin({script, webComponent}),
+      injectShadowRootPlugin(),
+      createWebComponentPreviewPlugin({webComponentName, webComponent}),
+    ],
+    build: {
+      lib: {
+        entry: script,
+        formats: ['es'],
+      },
+      minify: 'esbuild',
+      sourcemap: true,
+      manifest: 'manifest.wc.json',
+      rollupOptions: {
+        output: {
+          entryFileNames: '[name].[hash].js',
+          chunkFileNames: '[name].[hash].js',
+          assetFileNames: '[name].[hash].[ext]',
+          inlineDynamicImports: false,
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom'],
+            'router-vendor': ['react-router-dom'],
+            'markdown': ['react-markdown', 'rehype-highlight', 'remark-gfm']
+          }
         }
       }
     }
   }
-});
+};
 
 const getReactConfig = (): Partial<UserConfig> => ({
   plugins: [
@@ -41,9 +59,9 @@ const getReactConfig = (): Partial<UserConfig> => ({
   ]
 });
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode, command, server }) => ({
   plugins: mode === 'web-component' 
-    ? getWebComponentConfig().plugins 
+    ? getWebComponentConfig(command, server).plugins 
     : getReactConfig().plugins,
   define: {
     'process.env': {
@@ -51,7 +69,7 @@ export default defineConfig(({ mode }) => ({
     }
   },
   build: mode === 'web-component' 
-    ? getWebComponentConfig().build 
+    ? getWebComponentConfig(command, server).build 
     : undefined,
   server: {
     open: true,

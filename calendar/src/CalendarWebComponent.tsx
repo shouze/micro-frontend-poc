@@ -42,7 +42,7 @@ class CalendarWebComponent extends HTMLElement {
 
   private render() {
     const basename = this.getAttribute('route-basename') || '';
-    const loadingDelay = parseInt(this.getAttribute('loading-delay')) || 0;
+    const loadingDelay = parseInt(this.getAttribute('loading-delay') || '0');
 
     this.root?.render(
       <React.StrictMode>

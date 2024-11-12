@@ -5,9 +5,10 @@ import './App.css';
 interface AppProps {
   apiBaseUrl: string;
   basename?: string;
+  loadingDelay?: number;
 }
 
-export function App({ apiBaseUrl, basename }: AppProps) {
+export function App({ apiBaseUrl, basename, loadingDelay }: AppProps) {
   const toggleTask = (taskId: number) => {
     console.log('toggling task', taskId);
   }
@@ -66,6 +67,7 @@ export function App({ apiBaseUrl, basename }: AppProps) {
           <TaskList 
             apiBaseUrl={apiBaseUrl}
             onToggle={toggleTask}
+            loadingDelay={loadingDelay}
             />} 
           />
       </Routes>

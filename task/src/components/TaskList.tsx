@@ -14,7 +14,7 @@ interface TaskListProps {
 export function TaskList({
   apiBaseUrl,
   onToggle,
-  loadingDelay = 20,
+  loadingDelay = 600,
 }: TaskListProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
