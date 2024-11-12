@@ -57,3 +57,9 @@ Most of them are web standards:
 | - **Framework Agnostic**: They can be integrated into projects using React, Angular, Vue, or no framework at all. | - **Styling Challenges**: Shadow DOM encapsulation can make applying global styles or themes more difficult and being studied with precautions. |
 | - **Independent Dependencies**: Each micro frontend bundles its own dependencies, allowing the use of incompatible versions of libraries like React. | - **Testing Complexity**: Shadow DOM will need some adaptations in the QA/test tooling. |
 
+## Why not module federation?
+
+2 vite based module federation solutions have been tested and rejected.
+Tests have been made with distinct versions of react and react-router:
+- [@originjs/vite-plugin-federation](https://github.com/originjs/vite-plugin-federation): too many issues [like this one](https://github.com/originjs/vite-plugin-federation/issues/534) with conflicting shared dependencies and poor isolation.
+- [@module-federation/vite](https://github.com/module-federation/vite): same thing, [even with browser crashes](https://github.com/module-federation/vite/issues/179).
