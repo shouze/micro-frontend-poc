@@ -1,0 +1,7 @@
+[
+    {
+        "name": "Is each app still isolated from the others?",
+        "description": "Check if the apps are still isolated from each other",
+        "done": false
+    }
+]

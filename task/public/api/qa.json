@@ -1,0 +1,7 @@
+[
+    {
+        "name": "Ensure cypress automation tests are running successfully",
+        "description": "They probably won't because of shadow dom, so write a guideline on how to adapt the tests",
+        "done": false
+    }
+]

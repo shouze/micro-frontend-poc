@@ -47,6 +47,18 @@ export function App({ apiBaseUrl, basename }: AppProps) {
         >
           5. ShadowRoot
         </NavLink>
+        <NavLink 
+          to="/sentry"
+          className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+        >
+          6. Sentry
+        </NavLink>
+        <NavLink 
+          to="/qa"
+          className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+        >
+          7. QA
+        </NavLink>
       </nav>
       <Routes>
         <Route path="/" element={<Navigate to="/intro" replace />} />
