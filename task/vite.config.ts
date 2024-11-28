@@ -23,14 +23,14 @@ const getWebComponentConfig = (command: string): Partial<UserConfig> => {
   const webComponent = getWebComponentTemplate(mode);
   return {
     plugins: [
-      webcomponentPlugin({script, webComponent}),
+      webcomponentPlugin({ script, webComponent }),
       injectShadowRootPlugin(),
-      createWebComponentPreviewPlugin({webComponentName, webComponent}),
+      createWebComponentPreviewPlugin({ webComponentName, webComponent })
     ],
     build: {
       lib: {
         entry: script,
-        formats: ['es'],
+        formats: ['es']
       },
       minify: 'esbuild',
       sourcemap: true,
@@ -44,34 +44,30 @@ const getWebComponentConfig = (command: string): Partial<UserConfig> => {
           manualChunks: {
             'react-vendor': ['react', 'react-dom'],
             'router-vendor': ['react-router-dom'],
-            'markdown': ['react-markdown', 'rehype-highlight', 'remark-gfm']
+            markdown: ['react-markdown', 'rehype-highlight', 'remark-gfm']
           }
         }
       }
     }
-  }
+  };
 };
 
 const getReactConfig = (): Partial<UserConfig> => ({
-  plugins: [
-    react(),
-    injectShadowRootPlugin(),
-  ]
+  plugins: [react(), injectShadowRootPlugin()]
 });
 
 export default defineConfig(({ mode, command, server }) => ({
-  plugins: mode === 'web-component' 
-    ? getWebComponentConfig(command, server).plugins 
-    : getReactConfig().plugins,
+  plugins:
+    mode === 'web-component'
+      ? getWebComponentConfig(command, server).plugins
+      : getReactConfig().plugins,
   define: {
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production')
     }
   },
-  build: mode === 'web-component' 
-    ? getWebComponentConfig(command, server).build 
-    : undefined,
+  build: mode === 'web-component' ? getWebComponentConfig(command, server).build : undefined,
   server: {
-    open: false,
+    open: false
   }
 }));

@@ -51,11 +51,7 @@ class TaskWebComponent extends HTMLElement {
     this.root?.render(
       <React.StrictMode>
         <ShadowRootContext.Provider value={this.instanceId}>
-          <App 
-            basename={basename} 
-            apiBaseUrl={apiBaseUrl} 
-            loadingDelay={loadingDelay}
-          />
+          <App basename={basename} apiBaseUrl={apiBaseUrl} loadingDelay={loadingDelay} />
         </ShadowRootContext.Provider>
       </React.StrictMode>
     );

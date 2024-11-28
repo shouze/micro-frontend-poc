@@ -9,13 +9,17 @@ interface AppProps {
 
 function App({ basename, loadingDelay }: AppProps) {
   const today = new Date();
-  
+
   return (
-    <BrowserRouter basename={basename} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <BrowserRouter
+      basename={basename}
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
       <Routes>
-        <Route path="/" element={
-          <Navigate to={`/${today.getFullYear()}/${today.getMonth() + 1}`} replace />
-        } />
+        <Route
+          path="/"
+          element={<Navigate to={`/${today.getFullYear()}/${today.getMonth() + 1}`} replace />}
+        />
         <Route path="/:year/:month" element={<Calendar loadingDelay={loadingDelay} />} />
       </Routes>
     </BrowserRouter>

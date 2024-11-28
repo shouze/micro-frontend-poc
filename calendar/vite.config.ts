@@ -7,19 +7,23 @@ import createWebComponentPreviewPlugin from './src/plugins/createWebComponentPre
 const webComponentName = 'CalendarWebComponent';
 const WEB_COMPONENT_CONFIG = {
   script: `/src/${webComponentName}.tsx`,
-  webComponent: '<calendar-web-component route-basename="/" loading-delay="600"></calendar-web-component>'
+  webComponent:
+    '<calendar-web-component route-basename="/" loading-delay="600"></calendar-web-component>'
 };
 
 const getWebComponentConfig = (): Partial<UserConfig> => ({
   plugins: [
     webcomponentPlugin(WEB_COMPONENT_CONFIG),
     injectShadowRootPlugin(),
-    createWebComponentPreviewPlugin({webComponentName, webComponent: WEB_COMPONENT_CONFIG.webComponent}),
+    createWebComponentPreviewPlugin({
+      webComponentName,
+      webComponent: WEB_COMPONENT_CONFIG.webComponent
+    })
   ],
   build: {
     lib: {
       entry: WEB_COMPONENT_CONFIG.script,
-      formats: ['es'],
+      formats: ['es']
     },
     minify: 'esbuild',
     sourcemap: true,
@@ -32,7 +36,7 @@ const getWebComponentConfig = (): Partial<UserConfig> => ({
         inlineDynamicImports: false,
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
-          'router-vendor': ['react-router-dom'],
+          'router-vendor': ['react-router-dom']
         }
       }
     }
@@ -40,25 +44,18 @@ const getWebComponentConfig = (): Partial<UserConfig> => ({
 });
 
 const getReactConfig = (): Partial<UserConfig> => ({
-  plugins: [
-    react(),
-    injectShadowRootPlugin(),
-  ]
+  plugins: [react(), injectShadowRootPlugin()]
 });
 
 export default defineConfig(({ mode }) => ({
-  plugins: mode === 'web-component' 
-    ? getWebComponentConfig().plugins 
-    : getReactConfig().plugins,
+  plugins: mode === 'web-component' ? getWebComponentConfig().plugins : getReactConfig().plugins,
   define: {
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production')
     }
   },
-  build: mode === 'web-component' 
-    ? getWebComponentConfig().build 
-    : undefined,
+  build: mode === 'web-component' ? getWebComponentConfig().build : undefined,
   server: {
-    open: false,
+    open: false
   }
 }));

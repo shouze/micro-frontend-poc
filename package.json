@@ -2,6 +2,12 @@
   "name": "micro-frontend",
   "private": true,
   "version": "0.0.0",
+  "workspaces": [
+    "host",
+    "task",
+    "calendar",
+    "shared"
+  ],
   "scripts": {
     "dev": "concurrently \"yarn preview:remotes:wc\" \"yarn dev:host:wc\"",
     "preview:remotes:wc": "concurrently \"yarn preview:task:wc\" \"yarn preview:calendar:wc\"",

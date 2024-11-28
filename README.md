@@ -5,21 +5,18 @@ This repository illustrates an opiniated micro frontend solution relying on Web 
 ## How to start?
 
 ```shell
-# First time, install dependencies
-cd host && yarn && cd ..
-cd task && yarn && cd ..
-cd calendar && yarn && cd ..
-yarn
-# Other times, start dev
+# Install dependencies (installs dependencies across the workspace)
+yarn install
+# Then, start dev
 yarn dev
 ```
- 
+
 ## Concept and context
 
 Micro frontends were first mentioned in [ThoughtWorks Technology Radar in 2016](https://www.thoughtworks.com/radar/techniques/micro-frontends).
 The idea is - like microservice architecture - the following:
 
-	In this approach, a web application is broken up by its pages and features, with each feature being owned end-to-end by a single team.
+    In this approach, a web application is broken up by its pages and features, with each feature being owned end-to-end by a single team.
 
 The context here is more to build a proof of concept of already decoupled frontend apps. They are so decoupled that they’re hosted on distinct domain names. This is great in terms of isolation, but now that we want to introduce a transverse navigation, we’re not able to create a great user navigation experience as each time we navigate between apps we have to entirely reboot them :sob:.
 
@@ -55,6 +52,7 @@ graph TD
 ## Technology we want to rely on
 
 Most of them are web standards:
+
 - **[Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)**: with (almost) perfect isolation thanks to Shadow DOM and [ShadowRoot](https://developer.mozilla.org/en-US/docs/Web/API/ShadowRoot).
 - **Host routing**: [react router](https://reactrouter.com/en/main) and [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API).
 - **[Speculation Rules API](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)**: for prerender and prefetch, based on powerfull url matching rules.
@@ -62,16 +60,17 @@ Most of them are web standards:
 
 ## Why Web Components?
 
-| Pros                                                                                                                                                               | Cons      |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- |
-| - **Encapsulation**: Web Components allow you to encapsulate HTML, CSS, and JavaScript. Using the Shadow DOM, styles and DOM are isolated from the rest of the page. | - **Performance considerations**: this is the counterpart, as remotes share nothing so be careful of keeping remote as lightweight as possible. |
-| - **Standardized Technology**: Being part of the web standards, web components are natively supported by modern browsers. | - **State Management**: Managing state across multiple web components can be cumbersome without a centralized state management system. Inter host<->remote communication should be kept simple and adapted. |
-| - **Framework Agnostic**: They can be integrated into projects using React, Angular, Vue, or no framework at all. | - **Styling Challenges**: Shadow DOM encapsulation can make applying global styles or themes more difficult and being studied with precautions. |
-| - **Independent Dependencies**: Each micro frontend bundles its own dependencies, allowing the use of incompatible versions of libraries like React. | - **Testing Complexity**: Shadow DOM will need some adaptations in the QA/test tooling. |
+| Pros                                                                                                                                                                 | Cons                                                                                                                                                                                                        |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| - **Encapsulation**: Web Components allow you to encapsulate HTML, CSS, and JavaScript. Using the Shadow DOM, styles and DOM are isolated from the rest of the page. | - **Performance considerations**: this is the counterpart, as remotes share nothing so be careful of keeping remote as lightweight as possible.                                                             |
+| - **Standardized Technology**: Being part of the web standards, web components are natively supported by modern browsers.                                            | - **State Management**: Managing state across multiple web components can be cumbersome without a centralized state management system. Inter host<->remote communication should be kept simple and adapted. |
+| - **Framework Agnostic**: They can be integrated into projects using React, Angular, Vue, or no framework at all.                                                    | - **Styling Challenges**: Shadow DOM encapsulation can make applying global styles or themes more difficult and being studied with precautions.                                                             |
+| - **Independent Dependencies**: Each micro frontend bundles its own dependencies, allowing the use of incompatible versions of libraries like React.                 | - **Testing Complexity**: Shadow DOM will need some adaptations in the QA/test tooling.                                                                                                                     |
 
 ## Why not module federation?
 
 2 vite based module federation solutions have been tested and rejected.
 Tests have been made with distinct versions of react and react-router:
+
 - [@originjs/vite-plugin-federation](https://github.com/originjs/vite-plugin-federation): too many issues [like this one](https://github.com/originjs/vite-plugin-federation/issues/534) with conflicting shared dependencies and poor isolation.
 - [@module-federation/vite](https://github.com/module-federation/vite): same thing, [even with browser crashes](https://github.com/module-federation/vite/issues/179).

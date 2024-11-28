@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { Task } from "../types/Task";
-import { Loader } from "./Loader";
-import { MarkdownContent } from "./MarkdownContent";
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Task } from '../types/Task';
+import { Loader } from './Loader';
+import { MarkdownContent } from './MarkdownContent';
 import { useGetShadowRoot } from '../hooks/useShadowRoot';
 
 interface TaskListProps {
@@ -11,11 +11,7 @@ interface TaskListProps {
   loadingDelay?: number;
 }
 
-export function TaskList({
-  apiBaseUrl,
-  onToggle,
-  loadingDelay = 600,
-}: TaskListProps) {
+export function TaskList({ apiBaseUrl, onToggle, loadingDelay = 600 }: TaskListProps) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
@@ -44,9 +40,7 @@ export function TaskList({
 
   const toggleTask = (taskIndex: number) => {
     setTasks(
-      tasks.map((task, index) =>
-        index === taskIndex ? { ...task, done: !task.done } : task
-      )
+      tasks.map((task, index) => (index === taskIndex ? { ...task, done: !task.done } : task))
     );
     onToggle(taskIndex);
   };
@@ -63,7 +57,7 @@ export function TaskList({
               onChange={() => toggleTask(index)}
               aria-label={`Marquer "${task.name}" comme ${task.done ? 'non terminé' : 'terminé'}`}
             />
-            <label 
+            <label
               htmlFor={`task-${index}`}
               className={`task-name ${task.done ? 'task-done' : ''}`}
             >
@@ -81,13 +75,13 @@ export function TaskList({
               >
                 <span className="sr-only">Voir les détails</span>
                 <svg viewBox="0 0 20 20" width="16" height="16">
-                  <path d="M5 6l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="2"/>
+                  <path d="M5 6l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="2" />
                 </svg>
               </button>
             )}
           </div>
           {task.description && (
-            <div 
+            <div
               id={`details-${index}`}
               className="task-description"
               role="region"
