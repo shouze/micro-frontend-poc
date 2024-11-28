@@ -1,3 +1,3 @@
-import createWebComponentPreviewPlugin from "./createWebComponentPreviewPlugin";
+import createWebComponentPreviewPlugin from './createWebComponentPreviewPlugin';
 
 export default createWebComponentPreviewPlugin;

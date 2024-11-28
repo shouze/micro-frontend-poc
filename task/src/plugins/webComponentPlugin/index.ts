@@ -1,3 +1,3 @@
-import webcomponentPlugin from "./webComponentPlugin";
+import webcomponentPlugin from './webComponentPlugin';
 
 export default webcomponentPlugin;

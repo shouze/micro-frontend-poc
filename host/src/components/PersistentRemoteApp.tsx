@@ -20,10 +20,10 @@ export function PersistentRemoteApp({ config, isActive, style }: PersistentRemot
   if (!mounted) return null;
 
   return (
-    <div 
-      style={{ 
+    <div
+      style={{
         display: isActive ? 'block' : 'none',
-        ...style 
+        ...style
       }}
     >
       <LazyRemoteApp config={config} />

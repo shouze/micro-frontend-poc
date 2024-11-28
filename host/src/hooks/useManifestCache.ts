@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { loadManifest } from "../utils/manifest-loader";
+import { useEffect, useState } from 'react';
+import { loadManifest } from '../utils/manifest-loader';
 
 const manifestCache = new Map<string, Promise<void>>();
 
@@ -9,15 +9,13 @@ export function useManifestCache(manifestUrl: string, baseUrl: string) {
 
   useEffect(() => {
     if (!manifestCache.has(manifestUrl)) {
-      manifestCache.set(
-        manifestUrl,
-        loadManifest(manifestUrl, baseUrl)
-      );
+      manifestCache.set(manifestUrl, loadManifest(manifestUrl, baseUrl));
     }
 
-    manifestCache.get(manifestUrl)!
+    manifestCache
+      .get(manifestUrl)!
       .then(() => setIsLoading(false))
-      .catch(err => {
+      .catch((err) => {
         setError(err);
         manifestCache.delete(manifestUrl);
       });

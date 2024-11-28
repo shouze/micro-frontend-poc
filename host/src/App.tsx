@@ -3,7 +3,7 @@ import Layout from './components/Layout';
 import type { RemoteAppConfig } from './types/remote-app';
 import { PersistentRemoteApp } from './components/PersistentRemoteApp';
 import { useEffect } from 'react';
-import './App.css'
+import './App.css';
 
 const remoteApps: RemoteAppConfig[] = [
   {
@@ -42,22 +42,20 @@ function App() {
 
   return (
     <Layout remoteApps={remoteApps}>
-      {remoteApps.map(app => (
+      {remoteApps.map((app) => (
         <PersistentRemoteApp
           key={app.name}
           config={app}
-          isActive={app.routes.some(route => 
-            currentPath.startsWith(route.replace('/*', ''))
-          )}
+          isActive={app.routes.some((route) => currentPath.startsWith(route.replace('/*', '')))}
           style={{
-            viewTransitionName: `remote-app-${app.name.toLowerCase()}`,
+            viewTransitionName: `remote-app-${app.name.toLowerCase()}`
           }}
         />
       ))}
       <Routes location={location}>
         <Route path="/" element={<Navigate to="/tasks" replace />} />
-        {remoteApps.map(app => (
-          <Route 
+        {remoteApps.map((app) => (
+          <Route
             key={app.name}
             path={`${app.routes[0]}/*`}
             element={<div />} // Empty element to capture sub-routes
