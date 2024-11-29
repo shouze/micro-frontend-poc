@@ -10,14 +10,15 @@
   ],
   "scripts": {
     "dev": "concurrently \"yarn dev:remotes:wc\" \"yarn dev:host:wc\"",
-    "preview": "concurrently \"yarn preview:remotes:wc\" \"yarn dev:host:wc\"",
-    "preview:remotes:wc": "concurrently \"yarn preview:task:wc\" \"yarn preview:calendar:wc\"",
+    "preview": "concurrently \"yarn preview:remotes:wc\" \"yarn preview:host:wc\"",
     "dev:remotes:wc": "concurrently \"yarn dev:task:wc\" \"yarn dev:calendar:wc\"",
+    "preview:remotes:wc": "concurrently \"yarn preview:task:wc\" \"yarn preview:calendar:wc\"",
     "dev:host:wc": "cd host && yarn dev",
-    "preview:task:wc": "cd task && yarn build:wc && yarn preview:wc --port=4173",
+    "preview:host:wc": "cd host && yarn preview --port=4172",
     "dev:task:wc": "cd task && yarn dev:wc --port=4173",
-    "preview:calendar:wc": "cd calendar && yarn build:wc && yarn preview:wc --port=4174",
-    "dev:calendar:wc": "cd calendar && yarn dev:wc --port=4174"
+    "preview:task:wc": "cd task && yarn build:wc && yarn preview:wc --port=4173",
+    "dev:calendar:wc": "cd calendar && yarn dev:wc --port=4174",
+    "preview:calendar:wc": "cd calendar && yarn build:wc && yarn preview:wc --port=4174"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
