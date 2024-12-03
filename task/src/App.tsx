@@ -27,7 +27,7 @@ export function App({ apiBaseUrl, basename, loadingDelay }: AppProps) {
           justifyContent: 'space-between'
         }}
       >
-        <h1>Task App</h1>
+        <h1>Task App yo</h1>
         <Counter />
       </div>
       <h2>how to wrap a react app into a web component</h2>

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:wc": "vite --mode web-component",
+    "dev:wc": "vite --mode web-component --port=4173",
     "build": "tsc && vite build",
     "build:wc": "tsc && vite build --mode web-component && cp src/variables.css dist/",
     "preview": "vite preview",

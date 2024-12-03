@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react-swc';
 import webcomponentPlugin from './src/plugins/webComponentPlugin';
 import injectShadowRootPlugin from './src/plugins/injectShadowRoot';
 import createWebComponentPreviewPlugin from './src/plugins/createWebComponentPreviewPlugin';
+
 const PORTS = {
-  dev: 5173,
+  dev: 4173,
   preview: 4173
 } as const;
 const webComponentName = 'TaskWebComponent';
