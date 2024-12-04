@@ -26,7 +26,9 @@ const Layout = ({ children, remoteApps }: LayoutProps) => {
             <NavLink
               key={app.name}
               to={app.routes[0]}
-              className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+              className={({ isActive }) => `nav-link prerender ${isActive ? 'active' : ''}`}
+              viewTransition
+              reloadDocument={true}
               // onMouseEnter={() => preloadManifest(app.manifestUrl)}
             >
               {app.name}

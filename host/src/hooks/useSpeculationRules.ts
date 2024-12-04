@@ -1,12 +1,21 @@
 import { useEffect } from 'react';
 
+/**
+ * 
+ * @see https://developer.chrome.com/docs/web-platform/prerender-pages
+ */
 export function useSpeculationRules(urls: string[]) {
   useEffect(() => {
     const rules = {
       prerender: [
         {
-          source: 'list',
-          urls: urls
+          where: {
+            and: [
+              { href_matches: "/*" },
+              { selector_matches: ".prerender"},
+            ],
+          },
+          eagerness: "moderate"
         }
       ]
     };
