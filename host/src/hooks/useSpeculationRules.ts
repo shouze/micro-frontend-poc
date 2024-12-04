@@ -9,6 +9,7 @@ export function useSpeculationRules(urls: string[]) {
     const rules = {
       prerender: [
         {
+          source: "document",
           where: {
             and: [
               { href_matches: "/*" },

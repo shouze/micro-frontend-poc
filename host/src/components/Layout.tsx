@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 import type { RemoteAppConfig } from '../types/remote-app';
 import { useSpeculationRules } from '../hooks/useSpeculationRules';
 import { Counter } from './Counter';
-// import { usePreloadRemoteApp } from '../hooks/usePreloadRemoteApp';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,7 +11,6 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, remoteApps }: LayoutProps) => {
-  // const { preloadManifest } = usePreloadRemoteApp();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const rootUrls = remoteApps.map((app) => app.routes[0]);
   useSpeculationRules(rootUrls);
@@ -29,7 +27,6 @@ const Layout = ({ children, remoteApps }: LayoutProps) => {
               className={({ isActive }) => `nav-link prerender ${isActive ? 'active' : ''}`}
               viewTransition
               reloadDocument={true}
-              // onMouseEnter={() => preloadManifest(app.manifestUrl)}
             >
               {app.name}
             </NavLink>
