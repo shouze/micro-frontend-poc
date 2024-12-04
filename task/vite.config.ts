@@ -45,6 +45,7 @@ const getWebComponentConfig = (command: string): Partial<UserConfig> => {
           manualChunks: {
             'react-vendor': ['react', 'react-dom'],
             'router-vendor': ['react-router-dom'],
+            'mui-vendor': ['@mui/material'],
             markdown: ['react-markdown', 'rehype-highlight', 'remark-gfm']
           }
         }
