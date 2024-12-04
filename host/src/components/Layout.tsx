@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import type { RemoteAppConfig } from '../types/remote-app';
 import { useSpeculationRules } from '../hooks/useSpeculationRules';
 import { Counter } from './Counter';
-// import { usePreloadRemoteApp } from '../hooks/usePreloadRemoteApp';
+import { Loader } from './Loader';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,7 +12,6 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, remoteApps }: LayoutProps) => {
-  // const { preloadManifest } = usePreloadRemoteApp();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const rootUrls = remoteApps.map((app) => app.routes[0]);
   useSpeculationRules(rootUrls);
@@ -27,7 +26,6 @@ const Layout = ({ children, remoteApps }: LayoutProps) => {
               key={app.name}
               to={app.routes[0]}
               className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-              // onMouseEnter={() => preloadManifest(app.manifestUrl)}
             >
               {app.name}
             </NavLink>
@@ -36,7 +34,7 @@ const Layout = ({ children, remoteApps }: LayoutProps) => {
         <Counter />
       </motion.aside>
       <main className="content">
-        <Suspense fallback={<div>Chargement...</div>}>{children}</Suspense>
+        <Suspense fallback={<Loader/>}>{children}</Suspense>
       </main>
     </div>
   );
