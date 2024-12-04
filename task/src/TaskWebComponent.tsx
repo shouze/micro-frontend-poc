@@ -21,7 +21,7 @@ class TaskWebComponent extends HTMLElement {
 
   connectedCallback() {
     const mountPoint = document.createElement('div');
-    const shadow = this.attachShadow({ mode: 'open' });
+    const shadow = this.attachShadow({ mode: 'closed' });
     setShadowRoot(this.instanceId, shadow);
 
     const styleSheet = new CSSStyleSheet();
