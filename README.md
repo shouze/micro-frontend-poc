@@ -7,6 +7,9 @@ This repository illustrates an opiniated micro frontend solution relying on Web 
 ```shell
 # Install dependencies (installs dependencies across the workspace)
 yarn install
+# only the first time and anytime you update shared
+cd shared
+yarn build
 # Then, start dev
 yarn dev
 ```
