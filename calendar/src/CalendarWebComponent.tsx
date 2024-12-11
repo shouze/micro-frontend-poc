@@ -1,13 +1,11 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { ShadowRootContext } from './contexts/ShadowRootContext';
 import styles from './App.css?inline';
 import { setShadowRoot, cleanupShadowRoot } from 'virtual:shadow-root';
 
 class CalendarWebComponent extends HTMLElement {
   private root: ReactDOM.Root | null = null;
-  private instanceId: string;
 
   static get observedAttributes() {
     return ['route-basename', 'loading-delay'];
@@ -15,13 +13,12 @@ class CalendarWebComponent extends HTMLElement {
 
   constructor() {
     super();
-    this.instanceId = crypto.randomUUID();
   }
 
   connectedCallback() {
     const mountPoint = document.createElement('div');
     const shadow = this.attachShadow({ mode: 'closed' });
-    setShadowRoot(this.instanceId, shadow);
+    setShadowRoot(this.getAttribute('data-uuid'), shadow);
 
     const styleSheet = new CSSStyleSheet();
     styleSheet.replaceSync(styles);
@@ -33,7 +30,7 @@ class CalendarWebComponent extends HTMLElement {
   }
 
   disconnectedCallback() {
-    cleanupShadowRoot(this.instanceId);
+    cleanupShadowRoot(this.getAttribute('data-uuid'));
   }
 
   attributeChangedCallback() {
@@ -45,11 +42,9 @@ class CalendarWebComponent extends HTMLElement {
     const loadingDelay = parseInt(this.getAttribute('loading-delay') || '0');
 
     this.root?.render(
-      <React.StrictMode>
-        <ShadowRootContext.Provider value={this.instanceId}>
-          <App basename={basename} loadingDelay={loadingDelay} />
-        </ShadowRootContext.Provider>
-      </React.StrictMode>
+      <StrictMode>
+        <App basename={basename} loadingDelay={loadingDelay} />
+      </StrictMode>
     );
   }
 }

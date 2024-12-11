@@ -1,33 +1,33 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
-import { ShadowRootContext } from './contexts/ShadowRootContext';
 import styles from './App.css?inline';
 import highlightStyles from 'highlight.js/styles/github.css?inline';
 import { setShadowRoot, cleanupShadowRoot } from 'virtual:shadow-root';
+import { StrictMode } from 'react';
 
 class TaskWebComponent extends HTMLElement {
   private root: ReactDOM.Root | null = null;
-  private instanceId: string;
 
   static get observedAttributes() {
-    return ['route-basename', 'api-baseurl', 'loading-delay'];
+    return ['route-basename', 'api-baseurl', 'loading-delay', 'data-uuid'];
   }
 
   constructor() {
     super();
-    this.instanceId = crypto.randomUUID();
   }
 
   connectedCallback() {
+    console.log('mount', this.getAttribute('data-uuid') || '');
     const mountPoint = document.createElement('div');
     const shadow = this.attachShadow({ mode: 'closed' });
-    setShadowRoot(this.instanceId, shadow);
+    setShadowRoot(this.getAttribute('data-uuid'), shadow);
 
     const styleSheet = new CSSStyleSheet();
     const highlightStyleSheet = new CSSStyleSheet();
+
     styleSheet.replaceSync(styles);
     highlightStyleSheet.replaceSync(highlightStyles);
+
     shadow.adoptedStyleSheets = [styleSheet, highlightStyleSheet];
     shadow.appendChild(mountPoint);
 
@@ -36,7 +36,7 @@ class TaskWebComponent extends HTMLElement {
   }
 
   disconnectedCallback() {
-    cleanupShadowRoot(this.instanceId);
+    cleanupShadowRoot(this.getAttribute('data-uuid'));
   }
 
   attributeChangedCallback() {
@@ -49,11 +49,9 @@ class TaskWebComponent extends HTMLElement {
     const loadingDelay = parseInt(this.getAttribute('loading-delay') || '0');
 
     this.root?.render(
-      <React.StrictMode>
-        <ShadowRootContext.Provider value={this.instanceId}>
-          <App basename={basename} apiBaseUrl={apiBaseUrl} loadingDelay={loadingDelay} />
-        </ShadowRootContext.Provider>
-      </React.StrictMode>
+      <StrictMode>
+        <App basename={basename} apiBaseUrl={apiBaseUrl} loadingDelay={loadingDelay} />
+      </StrictMode>
     );
   }
 }
