@@ -58,17 +58,15 @@ const getReactConfig = (): Partial<UserConfig> => ({
   plugins: [react(), injectShadowRootPlugin()]
 });
 
-export default defineConfig(({ mode, command, server }) => ({
+export default defineConfig(({ mode, command }) => ({
   plugins:
-    mode === 'web-component'
-      ? getWebComponentConfig(command, server).plugins
-      : getReactConfig().plugins,
+    mode === 'web-component' ? getWebComponentConfig(command).plugins : getReactConfig().plugins,
   define: {
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'production')
     }
   },
-  build: mode === 'web-component' ? getWebComponentConfig(command, server).build : undefined,
+  build: mode === 'web-component' ? getWebComponentConfig(command).build : undefined,
   server: {
     open: false
   }

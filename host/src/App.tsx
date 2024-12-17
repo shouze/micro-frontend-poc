@@ -14,7 +14,8 @@ const remoteApps: RemoteAppConfig[] = [
     attributes: {
       'loading-delay': '800',
       'route-basename': '/tasks',
-      'api-baseurl': 'http://localhost:4173/api'
+      'api-baseurl': 'http://localhost:4173/api',
+      'data-uuid': crypto.randomUUID()
     }
   },
   {
@@ -25,7 +26,8 @@ const remoteApps: RemoteAppConfig[] = [
     attributes: {
       'loading-delay': '1500',
       'route-basename': '/calendar',
-      'api-baseurl': 'http://localhost:4174/api'
+      'api-baseurl': 'http://localhost:4174/api',
+      'data-uuid': crypto.randomUUID()
     }
   }
 ];

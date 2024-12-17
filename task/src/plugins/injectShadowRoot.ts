@@ -1,7 +1,8 @@
 import type { Plugin } from 'vite';
 
+const virtualModuleId = 'virtual:shadow-root';
+
 const injectShadowRootPlugin = (): Plugin => {
-  const virtualModuleId = 'virtual:shadow-root';
   const resolvedVirtualModuleId = '\0' + virtualModuleId;
 
   return {
@@ -13,12 +14,12 @@ const injectShadowRootPlugin = (): Plugin => {
       if (id === resolvedVirtualModuleId) {
         return `
           const shadowRoots = new Map();
-          
+
           export function setShadowRoot(instanceId, root) {
             shadowRoots.set(instanceId, root);
           }
-          
-          export function useShadowRoot(instanceId) {
+
+          export function getShadowRoots(instanceId) {
             return shadowRoots.get(instanceId);
           }
 
