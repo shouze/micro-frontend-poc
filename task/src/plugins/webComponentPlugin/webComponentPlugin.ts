@@ -1,51 +1,78 @@
-import path from 'path';
-import fs from 'fs';
-import type { ViteDevServer } from 'vite';
-import { Plugin } from 'vite';
+import type { Plugin, ViteDevServer, IndexHtmlTransformResult } from 'vite';
+interface Options {
+  script: string;           // eg: "/src/TaskWebComponent.tsx"
+  webComponent: string;     // eg: <task-web-component ... />
+  webComponentName: string; // eg: "TaskWebComponent"
+}
 
-const webcomponentMiddleWare = (server: ViteDevServer, options: Options) => {
-  server.middlewares.use((req, res, next) => {
-    if (req.url === '/index.html') {
-      const filePath = path.join(__dirname, 'wc.html.tpl');
-      fs.readFile(filePath, (err, data) => {
-        if (err) {
-          next(err);
-        } else {
-          const htmlContent = data
-            .toString()
-            .replace('{{script}}', options.script)
-            .replace('{{webComponent}}', options.webComponent);
-          res.setHeader('Content-Type', 'text/html');
-          res.end(htmlContent);
-        }
-      });
-    } else {
-      next();
-    }
-  });
-};
+interface ManifestEntry {
+  file: string;
+  src?: string;
+  isEntry?: boolean;
+  imports?: string[];
+}
 
-type Options = {
-  /**
-   * Name of the web component script file to load. Eg: /src/TaskWebComponent.tsx
-   */
-  script: string;
-
-  /**
-   * Web component to inject Eg: <task-web-component attribute1="val1" attribute2="val2"></task-web-component>
-   */
-  webComponent: string;
-};
-
-const webcomponentPlugin = (_options: Options): Plugin => {
+function generateDevManifest(webComponentName: string): Record<string, ManifestEntry> {
   return {
-    name: 'serve-web-component',
-    configureServer(server: ViteDevServer) {
-      return () => {
-        return webcomponentMiddleWare(server, _options);
-      };
+    [`src/${webComponentName}.tsx`]: {
+      file: `src/${webComponentName}.tsx`,
+      isEntry: true
     }
   };
-};
+}
 
-export default webcomponentPlugin;
+const webComponentPlugin = (options: Options): Plugin => {
+  return {
+    name: 'serve-web-component',
+
+    /**
+     * 
+     * @see https://vite.dev/guide/api-plugin#configureserver
+     */
+    configureServer(server: ViteDevServer) {
+      server.middlewares.use(`/${server.config.build.manifest}`, (req, res, next) => {
+        if (!req.originalUrl?.includes(server.config.build.manifest)) {
+          return next();
+        }
+        res.writeHead(200, {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+          'X-Content-Type-Options': 'nosniff',
+          'Access-Control-Allow-Origin': '*'
+        });
+
+        const manifest = generateDevManifest(options.webComponentName);
+        res.end(JSON.stringify(manifest, null, 2));
+      });
+    },
+
+    /** 
+     * @see https://vite.dev/guide/api-plugin#transformindexhtml
+     */
+    transformIndexHtml(html: string): IndexHtmlTransformResult {
+      const newHtml = html.replace(
+        '<script type="module" src="/src/main.tsx"></script>',
+        '',
+      ).replace(
+        '<div id="root"></div>',
+        options.webComponent,
+      );
+
+      return {
+        html: newHtml,
+        tags: [
+          {
+            tag: 'script',
+            injectTo: 'body',
+            attrs: {
+              type: 'module',
+              src: options.script
+            }
+          }
+        ]
+      };
+    },
+  };
+}
+
+export default webComponentPlugin;
