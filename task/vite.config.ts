@@ -1,8 +1,8 @@
 import { defineConfig, UserConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
-import webcomponentPlugin from './src/plugins/webComponentPlugin';
+import webComponentPlugin from './src/plugins/webComponentPlugin';
 import injectShadowRootPlugin from './src/plugins/injectShadowRoot';
-import createWebComponentPreviewPlugin from './src/plugins/createWebComponentPreviewPlugin';
+// import createWebComponentPreviewPlugin from './src/plugins/createWebComponentPreviewPlugin';
 
 const PORTS = {
   dev: 4173,
@@ -15,7 +15,7 @@ const getWebComponentTemplate = (mode: string) => {
     route-basename="/" 
     api-baseurl="http://localhost:${port}/api" 
     loading-delay="600"
-  ></task-web-component>`;
+></task-web-component>`;
 };
 const script = `/src/${webComponentName}.tsx`;
 
@@ -24,9 +24,10 @@ const getWebComponentConfig = (command: string): Partial<UserConfig> => {
   const webComponent = getWebComponentTemplate(mode);
   return {
     plugins: [
-      webcomponentPlugin({ script, webComponent }),
+      react(),
+      webComponentPlugin({ script, webComponent, webComponentName: 'TaskWebComponent' }),
       injectShadowRootPlugin(),
-      createWebComponentPreviewPlugin({ webComponentName, webComponent })
+      // createWebComponentPreviewPlugin({ webComponentName, webComponent })
     ],
     build: {
       lib: {
@@ -59,7 +60,7 @@ const getReactConfig = (): Partial<UserConfig> => ({
 });
 
 export default defineConfig(({ mode, command }) => ({
-  plugins:
+  plugins: 
     mode === 'web-component' ? getWebComponentConfig(command).plugins : getReactConfig().plugins,
   define: {
     'process.env': {
