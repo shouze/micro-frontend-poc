@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import type { RemoteAppConfig } from './types/remote-app';
-import { PersistentRemoteApp } from './components/PersistentRemoteApp';
+import ActiveRemoteApp from './components/ActiveRemoteApp';
 import { useEffect } from 'react';
 import './App.css';
 
@@ -45,7 +45,7 @@ function App() {
   return (
     <Layout remoteApps={remoteApps}>
       {remoteApps.map((app) => (
-        <PersistentRemoteApp
+        <ActiveRemoteApp
           key={app.name}
           config={app}
           isActive={app.routes.some((route) => currentPath.startsWith(route.replace('/*', '')))}
